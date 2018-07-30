@@ -1,21 +1,19 @@
-import numpy
+import numpy as np
 import matplotlib
 import pandas
 from scipy import misc
 from skimage import data
 import matplotlib.pyplot as plt
 
-
 photo_data = misc.imread('C:/Users/kevin/Documents/PyCharm/python-for-data-science/Week 3/sd-3layers.jpg')
-print("Shape of photo_data:", photo_data.shape)
-low_value_filter = photo_data < 0
-print("Shape of low_value_filter:", low_value_filter.shape)\
 
+red_mask = photo_data[:, :, 0] < 0  # red
+green_mask = photo_data[:, :, 1] < 0  # green
+blue_mask = photo_data[:, :, 2] < 0  # blue
 
-plt.figure(figsize=(10,10))
-plt.imshow(photo_data)
-photo_data[photo_data < 200] = 0
-plt.figure(figsize=(10,10))
+final_mask = np.logical_and(red_mask, green_mask, blue_mask)
+photo_data[final_mask] = 0
+plt.figure(figsize=(15, 15))
 plt.imshow(photo_data)
 
 plt.show()
